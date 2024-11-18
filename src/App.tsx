@@ -1,8 +1,11 @@
 import { useCallback, useState } from 'react'
+// import { useSelector } from 'react-redux'
 
 import Mole from './components/Mole'
 
 import { timeout } from './utils/timeout'
+
+// import type { RootState } from './store'
 
 import './styles/App.css'
 
@@ -11,6 +14,8 @@ const moles = 6
 function App() {
   const [isStart, setIsStart] = useState(false)
   const [activeMole, setActiveMole] = useState<number | null>(null)
+
+  // const stats = useSelector((state: RootState) => state.stats.value)
 
   const handleStart = useCallback(async () => {
     setIsStart(true)
