@@ -2,10 +2,14 @@ import '../styles/Mole.css'
 
 import MoleImg from '../assets/mole.webp'
 
-function Mole() {
+interface IMoleProps {
+  active: boolean
+}
+
+const Mole = ({ active }: IMoleProps) => {
   return (
     <div className="mole-wrapper">
-      <img className='mole-img' src={MoleImg} alt="mole" />
+      {active ? <img className="mole-img" src={MoleImg} alt="mole" /> : null}
     </div>
   )
 }
