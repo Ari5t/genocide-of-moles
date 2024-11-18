@@ -1,0 +1,15 @@
+.mole-wrapper {
+  background: #d8e2dc;
+  width: 200px;
+  height: 300px;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+}
+
+.mole-img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}

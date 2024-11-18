@@ -1,0 +1,22 @@
+.title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.scene-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.scene {
+  background: #3f3f3f;
+  width: 70%;
+  height: 80vh;
+  border-radius: 16px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+}
