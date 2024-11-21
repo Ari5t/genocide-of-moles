@@ -1,35 +1,30 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const STAST_NAME = 'stats'
 
-interface IValues {
-  difficulte: number
+export interface StatsState {
   score: number
   fail: number
 }
 
-export interface StatsState {
-  value: IValues
-}
-
 const initialState: StatsState = {
-  value: {
-    difficulte: 1,
-    score: 0,
-    fail: 0,
-  },
+  score: 0,
+  fail: 0,
 }
 
 export const statsSlice = createSlice({
   name: STAST_NAME,
   initialState,
   reducers: {
-    setStats: (state, action: PayloadAction<IValues>) => {
-      state.value = action.payload
+    failIncrement: (state) => {
+      state.fail += 1
+    },
+    scoreIncrement: (state) => {
+      state.score += 1
     },
   },
 })
 
-export const { setStats } = statsSlice.actions
+export const { failIncrement, scoreIncrement } = statsSlice.actions
 
 export default statsSlice.reducer

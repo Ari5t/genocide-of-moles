@@ -1,11 +1,11 @@
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '../store'
+import { setSelectedMole } from '../store/slices/game-slices'
+import type { RootState } from '../store'
 
 import MoleImg from '../assets/mole.webp'
 import '../styles/Mole.css'
-import { useCallback } from 'react'
-import { setSelectedMole } from '../store/slices/game-slices'
 
 interface IMoleProps {
   id: number

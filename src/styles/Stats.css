@@ -1,0 +1,23 @@
+.stats-wrapper {
+  background: #3f3f3f;
+  width: 25%;
+  height: 76vh;
+  border-radius: 16px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.stats-title {
+  margin: 0;
+  height: fit-content;
+  text-align: center;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}
