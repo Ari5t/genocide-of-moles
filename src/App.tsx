@@ -6,9 +6,10 @@ import Mole from './components/Mole'
 
 import {
   MAX_MOLES,
-  setMole,
+  setActiveMole,
   setPause,
-  setRandomMole,
+  setRandomActiveMole,
+  setSelectedMole,
 } from './store/slices/game-slices'
 
 import type { RootState } from './store'
@@ -20,6 +21,9 @@ function App() {
 
   const pause = useSelector((state: RootState) => state.game.pause)
   const activeMole = useSelector((state: RootState) => state.game.activeMole)
+  const selectedMole = useSelector(
+    (state: RootState) => state.game.selectedMole
+  )
 
   const handleStart = useCallback(async () => {
     setIsStart(true)
@@ -29,23 +33,35 @@ function App() {
     if (!isStart) return
 
     const interval = setInterval(() => {
+      if (selectedMole === activeMole && selectedMole !== null) {
+        dispatch(setSelectedMole(null))
+        dispatch(setActiveMole(null))
+        dispatch(setPause(moment().add(1, 's').unix()))
+      }
+
+      if (selectedMole !== activeMole && selectedMole !== null) {
+        dispatch(setSelectedMole(null))
+        dispatch(setActiveMole(null))
+        dispatch(setPause(moment().add(1, 's').unix()))
+      }
+
       if (Number(pause) > moment().unix()) {
         return
       }
 
       if (!activeMole) {
         dispatch(setPause(moment().add(4, 's').unix()))
-        dispatch(setRandomMole())
+        dispatch(setRandomActiveMole())
 
         return
       }
 
-      dispatch(setMole(null))
+      dispatch(setActiveMole(null))
       dispatch(setPause(moment().add(1, 's').unix()))
     }, 200)
 
     return () => clearInterval(interval)
-  }, [activeMole, dispatch, isStart, pause])
+  }, [activeMole, dispatch, isStart, pause, selectedMole])
 
   return (
     <div className="main" onClick={!isStart ? handleStart : () => {}}>

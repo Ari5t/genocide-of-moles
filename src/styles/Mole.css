@@ -13,3 +13,11 @@
   height: auto;
   max-width: 100%;
 }
+
+.mole-wrapper.success {
+  outline: 8px solid green;
+}
+
+.mole-wrapper.fail {
+  outline: 8px solid red;
+}
