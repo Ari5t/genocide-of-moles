@@ -1,15 +1,22 @@
-import '../styles/Mole.css'
+import { useSelector } from 'react-redux'
+
+import { RootState } from '../store'
 
 import MoleImg from '../assets/mole.webp'
+import '../styles/Mole.css'
 
 interface IMoleProps {
-  active: boolean
+  id: number
 }
 
-const Mole = ({ active }: IMoleProps) => {
+const Mole = ({ id }: IMoleProps) => {
+  const activeMole = useSelector((state: RootState) => state.game.activeMole)
+
   return (
     <div className="mole-wrapper">
-      {active ? <img className="mole-img" src={MoleImg} alt="mole" /> : null}
+      {id === activeMole ? (
+        <img className="mole-img" src={MoleImg} alt="mole" />
+      ) : null}
     </div>
   )
 }

@@ -1,32 +1,51 @@
-import { useCallback, useState } from 'react'
-// import { useSelector } from 'react-redux'
+import { useCallback, useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import moment from 'moment'
 
 import Mole from './components/Mole'
 
-import { timeout } from './utils/timeout'
+import {
+  MAX_MOLES,
+  setMole,
+  setPause,
+  setRandomMole,
+} from './store/slices/game-slices'
 
-// import type { RootState } from './store'
-
+import type { RootState } from './store'
 import './styles/App.css'
-
-const moles = 6
 
 function App() {
   const [isStart, setIsStart] = useState(false)
-  const [activeMole, setActiveMole] = useState<number | null>(null)
+  const dispatch = useDispatch()
 
-  // const stats = useSelector((state: RootState) => state.stats.value)
+  const pause = useSelector((state: RootState) => state.game.pause)
+  const activeMole = useSelector((state: RootState) => state.game.activeMole)
 
   const handleStart = useCallback(async () => {
     setIsStart(true)
-
-    while (true) {
-      setActiveMole(null)
-      await timeout(20)
-      setActiveMole(Math.floor(Math.random() * moles))
-      await timeout(4000)
-    }
   }, [])
+
+  useEffect(() => {
+    if (!isStart) return
+
+    const interval = setInterval(() => {
+      if (Number(pause) > moment().unix()) {
+        return
+      }
+
+      if (!activeMole) {
+        dispatch(setPause(moment().add(4, 's').unix()))
+        dispatch(setRandomMole())
+
+        return
+      }
+
+      dispatch(setMole(null))
+      dispatch(setPause(moment().add(1, 's').unix()))
+    }, 200)
+
+    return () => clearInterval(interval)
+  }, [activeMole, dispatch, isStart, pause])
 
   return (
     <div className="main" onClick={!isStart ? handleStart : () => {}}>
@@ -34,8 +53,8 @@ function App() {
       <div className="scene-wrapper">
         {isStart ? (
           <div className="scene">
-            {[...Array(moles)].map((_e, i) => (
-              <Mole active={activeMole === i} key={i}></Mole>
+            {[...Array(MAX_MOLES)].map((_e, i) => (
+              <Mole id={i} key={i}></Mole>
             ))}
           </div>
         ) : (
