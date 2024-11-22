@@ -7,12 +7,16 @@ export interface GameState {
   activeMole: number | null
   selectedMole: number | null
   pause: number | null
+  isStart: boolean
+  isStopped: boolean
 }
 
 const initialState: GameState = {
   activeMole: null,
   selectedMole: null,
   pause: null,
+  isStart: false,
+  isStopped: false,
 }
 
 export const gameSlice = createSlice({
@@ -31,10 +35,27 @@ export const gameSlice = createSlice({
     setPause: (state, action: PayloadAction<number | null>) => {
       state.pause = action.payload
     },
+    setIsStopped: (state, action: PayloadAction<boolean>) => {
+      state.isStopped = action.payload
+    },
+    setIsStart: (state, action: PayloadAction<boolean>) => {
+      state.isStart = action.payload
+    },
+
+    restartGame: () => {
+      return { ...initialState, isStart: true }
+    },
   },
 })
 
-export const { setActiveMole, setPause, setRandomActiveMole, setSelectedMole } =
-  gameSlice.actions
+export const {
+  setActiveMole,
+  setPause,
+  setRandomActiveMole,
+  setSelectedMole,
+  setIsStopped,
+  setIsStart,
+  restartGame,
+} = gameSlice.actions
 
 export default gameSlice.reducer

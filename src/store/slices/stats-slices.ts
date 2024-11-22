@@ -22,9 +22,13 @@ export const statsSlice = createSlice({
     scoreIncrement: (state) => {
       state.score += 1
     },
+    restartStats: () => {
+      return initialState
+    },
   },
 })
 
-export const { failIncrement, scoreIncrement } = statsSlice.actions
+export const { failIncrement, scoreIncrement, restartStats } =
+  statsSlice.actions
 
 export default statsSlice.reducer
