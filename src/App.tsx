@@ -8,12 +8,11 @@ import { Modal } from './components/Modal'
 
 import {
   MAX_MOLES,
-  setActiveMole,
+  restartMoles,
   setIsStart,
   setIsStopped,
   setPause,
   setRandomActiveMole,
-  setSelectedMole,
 } from './store/slices/game-slices'
 import { failIncrement, scoreIncrement } from './store/slices/stats-slices'
 import type { RootState } from './store'
@@ -47,16 +46,12 @@ function App() {
       }
 
       if (selectedMole === activeMole && selectedMole !== null) {
-        dispatch(setSelectedMole(null))
-        dispatch(setActiveMole(null))
-        dispatch(setPause(moment().add(1, 's').unix()))
+        dispatch(restartMoles())
         dispatch(scoreIncrement())
       }
 
       if (selectedMole !== activeMole && selectedMole !== null) {
-        dispatch(setSelectedMole(null))
-        dispatch(setActiveMole(null))
-        dispatch(setPause(moment().add(1, 's').unix()))
+        dispatch(restartMoles())
         dispatch(failIncrement())
       }
 
@@ -77,9 +72,8 @@ function App() {
         return
       }
 
-      dispatch(setActiveMole(null))
+      dispatch(restartMoles())
       dispatch(failIncrement())
-      dispatch(setPause(moment().add(1, 's').unix()))
     }, 100)
 
     return () => clearInterval(interval)
