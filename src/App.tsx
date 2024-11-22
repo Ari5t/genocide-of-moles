@@ -65,7 +65,13 @@ function App() {
       }
 
       if (activeMole === null) {
-        dispatch(setPause(moment().add(4, 's').unix()))
+        dispatch(
+          setPause(
+            moment()
+              .add(4000 - (Math.floor(score / 10) + 1) * 100, 'ms')
+              .unix()
+          )
+        )
         dispatch(setRandomActiveMole())
 
         return
@@ -74,7 +80,7 @@ function App() {
       dispatch(setActiveMole(null))
       dispatch(failIncrement())
       dispatch(setPause(moment().add(1, 's').unix()))
-    }, 200)
+    }, 100)
 
     return () => clearInterval(interval)
   }, [

@@ -9,6 +9,7 @@ import '../styles/Modal.css'
 
 export const Modal = () => {
   const isStopped = useSelector((state: RootState) => state.game.isStopped)
+  const score = useSelector((state: RootState) => state.stats.score)
   const dispatch = useDispatch()
 
   const handleClick = useCallback(() => {
@@ -21,7 +22,9 @@ export const Modal = () => {
   return (
     <div className="modal-wrapper">
       <div className="modal-block">
-        <h2 className="modal-title">Game Over</h2>
+        <h2 className="modal-title">
+          {score === 100 ? 'You win' : 'You Lose'}
+        </h2>
         <button onClick={handleClick} className="modal-button">
           Restart Game
         </button>
